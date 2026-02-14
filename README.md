@@ -140,7 +140,7 @@ python src/main.py
 ---
 
 <div align="center">
-  <p>Dibuat dengan ❤️ dan ☕ oleh Tim Senior Developer</p>
+  <p>Dibuat dengan ❤️ dan ☕ oleh Hafisch</p>
   <p>
     <img src="https://img.shields.io/badge/Status-Active-success?style=flat-square" />
     <img src="https://img.shields.io/badge/License-MIT-blue?style=flat-square" />
