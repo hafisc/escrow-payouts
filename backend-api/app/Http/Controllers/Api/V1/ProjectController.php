@@ -7,11 +7,14 @@ use App\Http\Requests\StoreProjectRequest;
 use App\Http\Resources\ProjectResource;
 use App\Repositories\ProjectRepositoryInterface;
 use App\Services\EscrowLogic;
+use App\Traits\ApiResponse;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class ProjectController extends Controller
 {
+    use ApiResponse;
+
     protected $repository;
     protected $escrowService;
 
@@ -26,11 +29,6 @@ class ProjectController extends Controller
      */
     public function index(): JsonResponse
     {
-        // Example: check role and filter
-        // If user is client, show their projects
-        // If user is freelancer, show their projects
-        // For admin, show all
-
         $user = auth()->user();
         if (!$user) {
             return response()->json(['message' => 'Unauthorized'], 401);
@@ -71,9 +69,6 @@ class ProjectController extends Controller
             return $this->error('Project not found', 404);
         }
         
-        // Authorization check logic in Policy later
-        // if ($project->client_id !== auth()->id() && ...)
-
         return $this->success(new ProjectResource($project));
     }
 
@@ -82,7 +77,6 @@ class ProjectController extends Controller
      */
     public function update(Request $request, string $id): JsonResponse
     {
-        // For simple updates not involving funds
         $updated = $this->repository->update($id, $request->all());
 
         if (!$updated) {

@@ -1,7 +1,10 @@
 from fastapi import FastAPI, Depends, Header, HTTPException, Request, Response, BackgroundTasks
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, ConfigDict
-from .scanner import CodeScanner
+try:
+    from .scanner import CodeScanner
+except ImportError:
+    from scanner import CodeScanner
 import os
 import uvicorn
 import logging

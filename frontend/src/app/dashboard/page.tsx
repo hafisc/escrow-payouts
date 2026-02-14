@@ -10,6 +10,7 @@ import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import api from "@/services/api";
 import { Project, Milestone } from "@/types";
+import Link from 'next/link'; // Added Link
 
 export default function DashboardPage() {
     const { user } = useAuthStore();
@@ -19,10 +20,9 @@ export default function DashboardPage() {
         activeCount: 0,
         completionRate: 0,
         pendingRelease: 0,
-        totalBalance: 0 // Mocked for now since backend doesn't return wallet balance yet
+        totalBalance: 0
     });
 
-    // State for the "Live Transaction" demo
     const [selectedProject, setSelectedProject] = useState<Project | null>(null);
 
     useEffect(() => {
@@ -32,7 +32,6 @@ export default function DashboardPage() {
                 const data: Project[] = response.data.data;
                 setProjects(data);
 
-                // Calculate Stats
                 const active = data.filter(p => p.status === 'active').length;
                 const completed = data.filter(p => p.status === 'completed').length;
                 const total = data.length;
@@ -40,7 +39,7 @@ export default function DashboardPage() {
 
                 let pendingAmount = 0;
                 data.forEach(p => {
-                    p.milestones.forEach(m => {
+                    p.milestones.forEach((m: Milestone) => {
                         if (m.status === 'in_escrow') pendingAmount += Number(m.amount);
                     });
                 });
@@ -68,9 +67,8 @@ export default function DashboardPage() {
         }
     }, [user]);
 
-    // Transform milestones for stepper
     const getStepperSteps = (project: Project) => {
-        return project.milestones.map((m) => {
+        return project.milestones.map((m: Milestone) => {
             let status: "pending" | "current" | "completed" | "issue" = "pending";
             if (m.status === 'released') status = "completed";
             if (m.status === 'in_escrow') status = "current";
@@ -112,9 +110,11 @@ export default function DashboardPage() {
                         <Button variant="outline" className="hidden md:flex gap-2 border-white/10 hover:bg-white/5 bg-black/20 backdrop-blur-md text-white">
                             <Bell className="w-4 h-4" /> Notifications
                         </Button>
-                        <Button className="bg-primary hover:bg-primary/90 text-primary-foreground shadow-[0_0_20px_rgba(var(--primary),0.5)] transition-shadow">
-                            <PlusCircle className="mr-2 h-4 w-4" /> New Escrow Project
-                        </Button>
+                        <Link href="/dashboard/new-project">
+                            <Button className="bg-primary hover:bg-primary/90 text-primary-foreground shadow-[0_0_20px_rgba(var(--primary),0.5)] transition-shadow">
+                                <PlusCircle className="mr-2 h-4 w-4" /> New Escrow Project
+                            </Button>
+                        </Link>
                     </div>
                 </div>
             </div>
@@ -202,24 +202,27 @@ export default function DashboardPage() {
                 ) : (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         {projects.map((project) => {
-                            // Determine logic for card
                             const totalMilestones = project.milestones?.length || 0;
                             const completedMilestones = project.milestones?.filter(m => m.status === 'released').length || 0;
                             const progress = totalMilestones > 0 ? Math.round((completedMilestones / totalMilestones) * 100) : 0;
 
-                            // Find next action
                             const currentMilestone = project.milestones?.find(m => m.status === 'in_escrow' || m.status === 'pending');
                             const nextAction = currentMilestone ? `Complete: ${currentMilestone.title}` : "All Done";
+
+                            let mappedStatus: "active" | "completed" | "dispute" | "pending" = "pending";
+                            if (project.status === 'active') mappedStatus = "active";
+                            if (project.status === 'completed') mappedStatus = "completed";
+                            if (project.status === 'disputed') mappedStatus = "dispute";
 
                             return (
                                 <div key={project.id} onClick={() => setSelectedProject(project)} className="cursor-pointer">
                                     <ProjectCard
                                         title={project.title}
                                         client={project.client?.name || 'Unknown'}
-                                        role={user?.role === 'client' ? 'Client' : 'Freelancer'}
+                                        role={user?.role === 'client' ? 'Client' : (user?.role === 'admin' ? 'Admin' : 'Freelancer')}
                                         budget={new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(project.total_budget)}
                                         progress={progress}
-                                        status={project.status}
+                                        status={mappedStatus}
                                         nextAction={nextAction}
                                     />
                                 </div>

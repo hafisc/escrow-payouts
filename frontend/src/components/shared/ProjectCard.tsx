@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 interface ProjectCardProps {
     title: string;
     client: string;
-    role: "Freelancer" | "Client";
+    role: string; // broadened to string or specific union
     budget: string;
     progress: number; // 0-100
     status: "active" | "completed" | "dispute" | "pending";

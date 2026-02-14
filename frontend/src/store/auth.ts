@@ -1,8 +1,9 @@
 'use client';
 
 import { create } from 'zustand';
+import { persist, createJSONStorage } from 'zustand/middleware';
 
-interface User {
+export interface User {
     id: number;
     name: string;
     email: string;
@@ -15,19 +16,29 @@ interface AuthState {
     isAuthenticated: boolean;
     login: (user: User, token: string) => void;
     logout: () => void;
-    // hydrate from localstorage optional
 }
 
-export const useAuthStore = create<AuthState>((set) => ({
-    user: null,
-    token: null,
-    isAuthenticated: false,
-    login: (user, token) => {
-        localStorage.setItem('token', token);
-        set({ user, token, isAuthenticated: true });
-    },
-    logout: () => {
-        localStorage.removeItem('token');
-        set({ user: null, token: null, isAuthenticated: false });
-    },
-}));
+export const useAuthStore = create<AuthState>()(
+    persist(
+        (set) => ({
+            user: null,
+            token: null,
+            isAuthenticated: false,
+            login: (user, token) => {
+                set({ user, token, isAuthenticated: true });
+            },
+            logout: () => {
+                set({ user: null, token: null, isAuthenticated: false });
+            },
+        }),
+        {
+            name: 'auth-storage', // unique name
+            storage: createJSONStorage(() => localStorage), // use localStorage
+            partialize: (state) => ({
+                user: state.user,
+                token: state.token,
+                isAuthenticated: state.isAuthenticated
+            }),
+        }
+    )
+);

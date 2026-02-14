@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { useAuthStore } from '@/store/auth';
 
 const api = axios.create({
     baseURL: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api',
@@ -9,7 +10,7 @@ const api = axios.create({
 });
 
 api.interceptors.request.use((config) => {
-    const token = localStorage.getItem('token');
+    const token = useAuthStore.getState().token;
     if (token) {
         config.headers.Authorization = `Bearer ${token}`;
     }
@@ -22,9 +23,8 @@ api.interceptors.response.use((response) => {
     return response;
 }, (error) => {
     if (error.response?.status === 401) {
-        // Handle unauthorized (redirect to login or clear token)
-        localStorage.removeItem('token');
-        if (window.location.pathname !== '/login') {
+        useAuthStore.getState().logout();
+        if (typeof window !== 'undefined' && window.location.pathname !== '/login') {
             window.location.href = '/login';
         }
     }
