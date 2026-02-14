@@ -1,0 +1,128 @@
+@import "tailwindcss";
+
+@theme {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --radius: 0.5rem;
+
+  /* Custom Animations */
+  --animate-float: float 6s ease-in-out infinite;
+
+  @keyframes float {
+
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+
+    50% {
+      transform: translateY(-20px);
+    }
+  }
+}
+
+:root {
+  /* Light Mode (kept but styled to match violet vibe) */
+  --background: oklch(0.98 0.01 293);
+  --foreground: oklch(0.10 0.05 293);
+
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.10 0.05 293);
+
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.10 0.05 293);
+
+  /* The Requested Violet */
+  --primary: oklch(0.541 0.281 293.009);
+  --primary-foreground: oklch(1 0 0);
+
+  --secondary: oklch(0.95 0.02 293);
+  --secondary-foreground: oklch(0.541 0.281 293.009);
+
+  --muted: oklch(0.95 0.02 293);
+  --muted-foreground: oklch(0.50 0.05 293);
+
+  --accent: oklch(0.95 0.02 293);
+  --accent-foreground: oklch(0.541 0.281 293.009);
+
+  --destructive: oklch(0.6 0.25 20);
+  --destructive-foreground: oklch(1 0 0);
+
+  --border: oklch(0.90 0.02 293);
+  --input: oklch(0.90 0.02 293);
+  --ring: oklch(0.541 0.281 293.009);
+
+  --radius: 0.75rem;
+}
+
+/* Force Dark Mode Default or Style Dark Mode */
+.dark,
+:root {
+  /* Deep Violet/Black Background */
+  --background: oklch(0.05 0.05 293);
+  --foreground: oklch(0.98 0.01 293);
+
+  /* Glassy Cards */
+  --card: oklch(0.10 0.05 293);
+  --card-foreground: oklch(0.98 0.01 293);
+
+  --popover: oklch(0.10 0.05 293);
+  --popover-foreground: oklch(0.98 0.01 293);
+
+  /* Vibrant Violet */
+  --primary: oklch(0.541 0.281 293.009);
+  --primary-foreground: oklch(1 0 0);
+
+  --secondary: oklch(0.20 0.10 293);
+  --secondary-foreground: oklch(0.98 0.01 293);
+
+  --muted: oklch(0.20 0.10 293);
+  --muted-foreground: oklch(0.70 0.05 293);
+
+  --accent: oklch(0.541 0.281 293.009);
+  /* Accent is now the primary violet */
+  --accent-foreground: oklch(1 0 0);
+
+  --destructive: oklch(0.4 0.2 20);
+  --destructive-foreground: oklch(1 0 0);
+
+  --border: oklch(0.20 0.10 293);
+  --input: oklch(0.20 0.10 293);
+  --ring: oklch(0.541 0.281 293.009);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  body {
+    @apply bg-background text-foreground tracking-wide;
+  }
+}
