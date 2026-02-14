@@ -1,129 +1,148 @@
-# 🛡️ Escrowy - Platform Rekening Bersama (Escrow) Modern & Aman
+<div align="center">
 
-Selamat datang di **Escrowy**! 👋
+  <h1>🛡️ ESCROWY</h1>
+  <h3>The Next-Gen Freelance Escrow Platform</h3>
+  
+  <p>
+    <b>Secure. Smart. Seamless.</b><br>
+    Platform Rekening Bersama (Rekber) Modern dengan Audit AI Terintegrasi.
+  </p>
 
-Escrowy adalah platform **Rekening Bersama (Rekber)** kusus untuk **Freelancer dan Klien** yang didesain untuk mencegah penipuan. Kami menggunakan teknologi canggih dengan tampilan "Gen Z" yang keren (Violet & Dark Mode) serta fitur **AI Audit** untuk memeriksa kualitas kode sebelum dana dicairkan.
+  <p>
+    <a href="#-fitur-unggulan">Fitur</a> •
+    <a href="#-teknologi">Teknologi</a> •
+    <a href="#-instalasi">Instalasi</a> •
+    <a href="#-struktur-project">Struktur</a>
+  </p>
 
----
-
-## 🚀 Fitur Utama
-
-1.  **Uang Aman**: Dana klien dikunci di sistem (Escrow) dan baru cair ke freelancer setelah pekerjaan selesai & disetujui.
-2.  **AI Code Auditor**: Ada "Otak AI" (Python Service) yang otomatis mengecek kode freelancer (apakah aman, tidak ada virus/backdoor, dan rapi).
-3.  **Milestone Tracking**: Pantau progress pekerjaan tahap demi tahap (Deposit -> Review -> Rilis).
-4.  **Tampilan Keren**: Desain modern (Glassmorphism, Glow Effects) yang nyaman di mata.
-
----
-
-## 🏗️ Teknologi yang Dipakai (Tech Stack)
-
-Project ini menggunakan arsitektur **Microservices** yang terdiri dari 3 bagian utama:
-
-| Bagian | Teknologi | Port Default | Deskripsi |
-| :--- | :--- | :--- | :--- |
-| **Frontend** | **Next.js 15** (App Router) <br> Tailwind CSS v4 <br> Shadcn UI <br> Framer Motion | `3000` | Tampilan website yang dilihat pengguna. |
-| **Backend API** | **Laravel 12** (PHP) <br> PostgreSQL / MySQL <br> Sanctum Auth | `8000` | Otak utama yang mengatur user, database, dan transaksi uang. |
-| **AI Service** | **Python 3** <br> FastAPI <br> Pydantic | `8001` | Service khusus untuk scan file codingan freelancer. |
+  <p>
+    <img src="https://img.shields.io/badge/Laravel-12.0-FF2D20?style=for-the-badge&logo=laravel&logoColor=white" alt="Laravel" />
+    <img src="https://img.shields.io/badge/Next.js-15.0-000000?style=for-the-badge&logo=nextdotjs&logoColor=white" alt="Next.js" />
+    <img src="https://img.shields.io/badge/Python-3.11-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python" />
+    <img src="https://img.shields.io/badge/Tailwind-v4-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white" alt="Tailwind" />
+  </p>
+</div>
 
 ---
 
-## 🛠️ Cara Install & Menjalankan (Localhos)
+## ⚡ Kilasan Project (Overview)
 
-Ikuti langkah-langkah ini untuk menjalankan Escrowy di komputer kamu.
+**Escrowy** bukan sekadar rekening bersama biasa. Ini adalah **Platform Kepercayaan** yang dibangun untuk generasi digital. Kami menggabungkan keamanan finansial dengan kecerdasan buatan untuk memastikan setiap transaksi berjalan adil.
 
-### 1. Persiapan Awal
-Pastikan kamu sudah install:
-*   [Node.js](https://nodejs.org/) (untuk Frontend)
-*   [PHP](https://www.php.net/) & [Composer](https://getcomposer.org/) (untuk Backend)
-*   [Python](https://www.python.org/) & PIP (untuk AI Service)
-*   Database (MySQL atau PostgreSQL)
+> "Jangan biarkan kode buruk dibayar, dan jangan biarkan kerja keras tidak dihargai."
 
-### 2. Setup Backend (Laravel)
-Masuk ke folder `backend-api`:
+---
+
+## � Fitur Unggulan
+
+| Fitur | Deskripsi | Teknologi |
+| :--- | :--- | :--- |
+| **🔐 Smart Escrow** | Dana dikunci aman di sistem hingga milestone tercapai. Anti-kabur! | `DB Transactions` |
+| **🤖 AI Code Auditor** | Assistant AI (Python) otomatis mengecek kualitas & keamanan kode freelancer. | `FastAPI` + `Regex` |
+| **💸 Milestone Payouts** | Pembayaran bertahap (DP, Progress, Final) yang transparan. | `Midtrans` (Simulated) |
+| **🎨 Violet Glass UI** | Tampilan *Cyber-aesthetic* dengan efek *Glassmorphism* & *Neon Glow*. | `Shadcn UI` + `Framer Motion` |
+| **🛡️ Role-Based Access** | Dashboard khusus untuk **Klien** (Penyewa) dan **Freelancer** (Pekerja). | `Laravel Sanctum` |
+
+---
+
+## 🛠️ Arsitektur & Teknologi
+
+Kami menggunakan pendekatan **Microservices** agar performa maksimal dan mudah dikembangkan.
+
+```mermaid
+graph TD;
+    User[👤 User] -->|HTTPS| Frontend[⚛️ Next.js Frontend :3000];
+    Frontend -->|API REST| Backend[🔥 Laravel Backend :8000];
+    Backend -->|Database| DB[(🐘 PostgreSQL/MySQL)];
+    Backend -->|Request Audit| AI[🐍 Python AI Service :8001];
+    AI -->|Result| Backend;
+```
+
+### 📦 Tech Stack Detail
+
+*   **Frontend (The Face):**
+    *   Next.js 15 (App Router)
+    *   TypeScript (Strict Mode)
+    *   Tailwind CSS v4 (Oklch Colors)
+    *   Framer Motion (Smooth Animations)
+    *   Lucide React (Icons)
+
+*   **Backend (The Brain):**
+    *   Laravel 12 (PHP 8.2+)
+    *   Sanctum (Authentication)
+    *   Repository Pattern (Clean Code)
+
+*   **AI Service (The Auditor):**
+    *   FastAPI (Asynchronous Python)
+    *   Pydantic (Validation)
+
+---
+
+## � Instalasi & Cara Jalankan
+
+Siapkan kopi ☕, kita akan menyalakan mesin roket ini dalam 3 langkah!
+
+### 1️⃣ Nyalakan Backend (Laravel)
+Terminal 1:
 ```bash
 cd backend-api
-
-# Install dependency PHP
 composer install
-
-# Copy file settingan
 cp .env.example .env
-
-# Generate kunci aplikasi
 php artisan key:generate
-
-# Setting Database di file .env (DB_DATABASE, DB_USERNAME, dll)
-# Lalu jalankan migrasi database:
 php artisan migrate
-
-# Jalankan Server Backend
 php artisan serve
+# 🟢 Berjalan di: http://localhost:8000
 ```
-Backend akan jalan di: `http://localhost:8000`
 
-### 3. Setup Frontend (Next.js)
-Buka terminal baru, masuk ke folder `frontend`:
+### 2️⃣ Nyalakan Frontend (Next.js)
+Terminal 2:
 ```bash
 cd frontend
-
-# Install dependency JS
 npm install
-
-# Jalankan Server Frontend
 npm run dev
+# 🔵 Berjalan di: http://localhost:3000
 ```
-Frontend akan jalan di: `http://localhost:3000` (Buka ini di browser!)
 
-### 4. Setup AI Service (Python)
-Buka terminal baru lagi, masuk ke folder `python-service`:
+### 3️⃣ Nyalakan AI Service (Python)
+Terminal 3:
 ```bash
 cd python-service
-
-# (Opsional) Buat virtual environment
-python -m venv venv
-# Windows: venv\Scripts\activate
-# Mac/Linux: source venv/bin/activate
-
-# Install library Python
+# (Opsional) python -m venv venv && source venv/bin/activate
 pip install -r requirements.txt
-
-# Jalankan Server AI
 python src/main.py
-```
-AI Service akan jalan di: `http://localhost:8001`
-
----
-
-## 📂 Struktur Folder
-Biar nggak bingung, ini struktur foldernya:
-
-```
-d:\Project\Escrowy\
-├── backend-api/       # Kodingan Laravel (API Utama)
-│   ├── app/
-│   ├── database/
-│   └── routes/api.php
-│
-├── frontend/          # Kodingan Next.js (Tampilan Website)
-│   ├── src/app/       # Halaman-halaman (Dashboard, Login, dll)
-│   └── src/components # Komponen UI (Card, Button, Sidebar)
-│
-└── python-service/    # Kodingan Python (AI Scanner)
-    ├── src/main.py
-    └── src/scanner.py
+# 🟡 Berjalan di: http://localhost:8001
 ```
 
 ---
 
-## 🧪 Cara Pakai (Alur Kerja)
+## 📂 Struktur Project
 
-1.  **Daftar/Login**: Buka browser `localhost:3000`, daftar sebagai **Client** atau **Freelancer**.
-2.  **Buat Project**: Klien membuat project baru & menentukan budget.
-3.  **Deposit Dana**: Klien mentransfer uang (simulasi), status berubah jadi "In Escrow".
-4.  **Upload Pekerjaan**: Freelancer upload hasil kerja (misal file .zip).
-5.  **AI Scan Otomatis**: Sistem Python akan mengecek file tersebut (Cek virus/kualitas).
-6.  **Rilis Dana**: Jika aman & klien puas, klien klik "Release Funds". Uang masuk ke dompet Freelancer.
+```bash
+📦 Escrowy
+ ┣ 📂 backend-api    # 🔥 LARAVEL (API Utama & Logika Bisnis)
+ ┃ ┣ 📂 app
+ ┃ ┃ ┣ 📂 Services   (EscrowLogic, AiService)
+ ┃ ┃ ┗ 📂 Models     (Project, Milestone, Transaction)
+ ┃ ┗ 📜 routes/api.php
+ ┃
+ ┣ 📂 frontend       # ⚛️ NEXT.JS (Tampilan Web Keren)
+ ┃ ┣ 📂 src
+ ┃ ┃ ┣ 📂 app        (Dashboard, Login, Landing Page)
+ ┃ ┃ ┣ 📂 components (Shared UI, ProjectCard, Sidebar)
+ ┃ ┃ ┗ 📂 store      (Zustand State Management)
+ ┃
+ ┗ 📂 python-service # 🐍 PYTHON (AI Code Scanner)
+   ┣ 📂 src
+   ┃ ┗ 📜 scanner.py (Logika Audit Kode)
+   ┗ 📜 main.py
+```
 
 ---
 
-
+<div align="center">
+  <p>Dibuat dengan ❤️ dan ☕ oleh Tim Senior Developer</p>
+  <p>
+    <img src="https://img.shields.io/badge/Status-Active-success?style=flat-square" />
+    <img src="https://img.shields.io/badge/License-MIT-blue?style=flat-square" />
+  </p>
+</div>
