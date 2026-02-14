@@ -3,7 +3,7 @@
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { useAuthStore } from "@/store/auth";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import {
     LayoutDashboard,
     FolderGit2,
@@ -26,6 +26,12 @@ interface SidebarProps {
 export function Sidebar({ className, isOpen, setIsOpen }: SidebarProps) {
     const { user, logout } = useAuthStore();
     const pathname = usePathname();
+    const router = useRouter();
+
+    const handleLogout = () => {
+        logout();
+        router.push("/login");
+    };
 
     const clientLinks = [
         { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
@@ -128,7 +134,7 @@ export function Sidebar({ className, isOpen, setIsOpen }: SidebarProps) {
                     </div>
                 </div>
                 <button
-                    onClick={logout}
+                    onClick={handleLogout}
                     className="w-full flex items-center justify-center gap-2 py-2.5 text-xs font-bold uppercase tracking-wider text-red-400 hover:text-white bg-red-500/10 hover:bg-red-500 hover:shadow-[0_0_20px_rgba(239,68,68,0.4)] border border-red-500/20 rounded-xl transition-all duration-300"
                 >
                     <LogOut className="w-4 h-4" />

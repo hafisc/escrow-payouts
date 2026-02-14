@@ -83,6 +83,81 @@ export default function DashboardPage() {
         });
     };
 
+    // ... inside DashboardPage component
+
+    const renderAdminDashboard = () => (
+        <div className="space-y-8 min-h-screen p-6 bg-background text-foreground pb-20">
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                <div>
+                    <h1 className="text-4xl font-black tracking-tight text-white mb-1">Admin Overview</h1>
+                    <p className="text-muted-foreground">System performance and platform metrics.</p>
+                </div>
+                <div className="flex gap-2">
+                    <Button variant="outline" className="gap-2"><Bell className="w-4 h-4" /> System Alerts</Button>
+                    <Button className="bg-primary hover:bg-primary/90"><Trophy className="w-4 h-4 mr-2" /> View Audit Logs</Button>
+                </div>
+            </div>
+
+            {/* Admin Stats Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <Card className="bg-primary/10 border-primary/20">
+                    <CardContent className="pt-6">
+                        <p className="text-xs font-bold text-primary uppercase tracking-wider">Total Revenue</p>
+                        <h2 className="text-3xl font-bold text-white mt-1">IDR 450.2M</h2>
+                        <p className="text-xs text-green-400 mt-2 flex items-center gap-1">+12% from last month</p>
+                    </CardContent>
+                </Card>
+                <Card className="bg-blue-500/10 border-blue-500/20">
+                    <CardContent className="pt-6">
+                        <p className="text-xs font-bold text-blue-500 uppercase tracking-wider">Total Users</p>
+                        <h2 className="text-3xl font-bold text-white mt-1">1,240</h2>
+                        <p className="text-xs text-blue-400 mt-2">85 New this week</p>
+                    </CardContent>
+                </Card>
+                <Card className="bg-orange-500/10 border-orange-500/20">
+                    <CardContent className="pt-6">
+                        <p className="text-xs font-bold text-orange-500 uppercase tracking-wider">Active Disputes</p>
+                        <h2 className="text-3xl font-bold text-white mt-1">3</h2>
+                        <p className="text-xs text-orange-400 mt-2">Action Required</p>
+                    </CardContent>
+                </Card>
+                <Card className="bg-green-500/10 border-green-500/20">
+                    <CardContent className="pt-6">
+                        <p className="text-xs font-bold text-green-500 uppercase tracking-wider">System Health</p>
+                        <h2 className="text-3xl font-bold text-white mt-1">99.9%</h2>
+                        <p className="text-xs text-green-400 mt-2">All Services Operational</p>
+                    </CardContent>
+                </Card>
+            </div>
+
+            {/* Recent Projects Table for Admin */}
+            <div>
+                <h2 className="text-xl font-bold text-white mb-4">Recent Projects</h2>
+                {projects.length === 0 ? (
+                    <div className="text-center py-20 bg-white/5 rounded-xl border border-dashed border-white/10">
+                        <p className="text-muted-foreground">No projects found.</p>
+                    </div>
+                ) : (
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        {projects.slice(0, 6).map((project) => (
+                            <div key={project.id}>
+                                <ProjectCard
+                                    title={project.title}
+                                    client={project.client?.name || 'Unknown'}
+                                    role="Admin"
+                                    budget={new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(project.total_budget)}
+                                    progress={50} // Mock progress
+                                    status={project.status === 'active' ? 'active' : 'pending'}
+                                    nextAction="Monitor Progress"
+                                />
+                            </div>
+                        ))}
+                    </div>
+                )}
+            </div>
+        </div>
+    );
+
     if (loading) {
         return (
             <div className="flex h-screen items-center justify-center bg-background">
@@ -91,6 +166,12 @@ export default function DashboardPage() {
         );
     }
 
+    // Render Admin View
+    if (user?.role === 'admin') {
+        return renderAdminDashboard();
+    }
+
+    // Render Client/Freelancer View (Existing Logic)
     return (
         <div className="space-y-8 min-h-screen p-6 bg-background text-foreground pb-20">
 
@@ -110,11 +191,14 @@ export default function DashboardPage() {
                         <Button variant="outline" className="hidden md:flex gap-2 border-white/10 hover:bg-white/5 bg-black/20 backdrop-blur-md text-white">
                             <Bell className="w-4 h-4" /> Notifications
                         </Button>
-                        <Link href="/dashboard/new-project">
-                            <Button className="bg-primary hover:bg-primary/90 text-primary-foreground shadow-[0_0_20px_rgba(var(--primary),0.5)] transition-shadow">
-                                <PlusCircle className="mr-2 h-4 w-4" /> New Escrow Project
-                            </Button>
-                        </Link>
+                        {/* Show New Project Button only for Clients */}
+                        {user?.role === 'client' && (
+                            <Link href="/dashboard/new-project">
+                                <Button className="bg-primary hover:bg-primary/90 text-primary-foreground shadow-[0_0_20px_rgba(var(--primary),0.5)] transition-shadow">
+                                    <PlusCircle className="mr-2 h-4 w-4" /> New Escrow Project
+                                </Button>
+                            </Link>
+                        )}
                     </div>
                 </div>
             </div>
@@ -219,7 +303,7 @@ export default function DashboardPage() {
                                     <ProjectCard
                                         title={project.title}
                                         client={project.client?.name || 'Unknown'}
-                                        role={user?.role === 'client' ? 'Client' : (user?.role === 'admin' ? 'Admin' : 'Freelancer')}
+                                        role={user?.role === 'client' ? 'Client' : 'Freelancer'}
                                         budget={new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(project.total_budget)}
                                         progress={progress}
                                         status={mappedStatus}
